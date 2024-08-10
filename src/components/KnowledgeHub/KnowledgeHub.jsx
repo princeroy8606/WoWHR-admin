@@ -142,8 +142,8 @@ const KnowledgeHub = () => {
               <div className="w-[8rem] h-full flex gap-2 items-center text-black font-medium">
                 <p>Type</p>
               </div>
-              <div className="w-[8rem] h-full flex gap-2 items-center text-black font-medium">
-                <p>Source Type</p>
+              <div className="w-[10rem] h-full flex gap-2 items-center text-black font-medium">
+                <p>Title</p>
               </div>
               <div className="w-[30rem] h-full flex gap-4 items-center text-black font-medium">
                 <p>Description</p>
@@ -155,7 +155,6 @@ const KnowledgeHub = () => {
                 <p>Action</p>
               </div>
             </div>
-
             {knowledgeData.map((knowledge, index) => (
               <div
                 key={knowledge.id}
@@ -167,8 +166,10 @@ const KnowledgeHub = () => {
                 <div className="w-[8rem] h-fit flex gap-2 items-center text-gray-500">
                   <p>{knowledge.type}</p>
                 </div>
-                <div className="w-[8rem] h-fit flex gap-2 items-center text-gray-500">
-                  <p>{knowledge.sourceType}</p>
+                <div className="w-[10rem] h-fit flex gap-2 items-center text-gray-500">
+                  <p className="w-full h-full text-[14px] text-justify">
+                    {knowledge.sourceType}
+                  </p>
                 </div>
                 <div className="w-[30rem] h-full overflow-hidden flex gap-4 items-center text-gray-500">
                   <p className="w-full h-full text-[12px] text-justify">

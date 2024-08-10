@@ -20,33 +20,30 @@ const NewKnowledge = ({
 }) => {
   const [knowledgeData, setKnowledgeData] = useState({
     type: "",
-    sourceType: "",
+    title: "",
     description: "",
-    mediaFile: null,
+    authorProfile: null,
     mediaUrl: "",
+    authorName: "",
   });
 
-  const [imageUrl, setImageUrl] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
   const [isMediaChanged, setIsMediaChanged] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
-    if (knowledgeData.mediaFile && knowledgeData.sourceType && isMediaChanged) {
+    if (knowledgeData.authorProfile && isMediaChanged) {
       const file = knowledgeData.mediaFile;
 
       if (file instanceof Blob) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          if (knowledgeData.sourceType === "image") {
-            setImageUrl(e.target.result);
-          } else if (knowledgeData.sourceType === "video") {
-            setVideoUrl(e.target.result);
-          }
+          setVideoUrl(e.target.result);
         };
         reader.readAsDataURL(file);
       }
     }
-  }, [knowledgeData.mediaFile, knowledgeData.sourceType, isMediaChanged]);
+  }, [knowledgeData.authorProfile, isMediaChanged]);
 
   useEffect(() => {
     if (edit) {
@@ -63,7 +60,7 @@ const NewKnowledge = ({
           storage,
           `knowledge/${knowledgeData.mediaFile.name}`
         );
-        await uploadBytes(mediaRef, knowledgeData.mediaFile);
+        await uploadBytes(mediaRef, knowledgeData.authorProfile);
         url = await getDownloadURL(mediaRef);
         console.log("Media uploaded to:", url);
       } catch (e) {
@@ -74,7 +71,7 @@ const NewKnowledge = ({
     if (!edit) {
       const eventRef = collection(db, "knowledge");
       try {
-        await addDoc(eventRef, { ...knowledgeData, mediaFile: url });
+        await addDoc(eventRef, { ...knowledgeData, authorProfile: url });
         console.log("Added to database");
       } catch (e) {
         console.log(e);
@@ -84,11 +81,11 @@ const NewKnowledge = ({
         try {
           const mediaRef = ref(
             storage,
-            `knowledge/${knowledgeData.mediaFile.name}`
+            `knowledge/${knowledgeData.authorProfile.name}`
           );
-          await uploadBytes(mediaRef, knowledgeData.mediaFile);
+          await uploadBytes(mediaRef, knowledgeData.authorProfile);
           url = await getDownloadURL(mediaRef);
-          setKnowledgeData((prevData) => ({ ...prevData, mediaFile: url }));
+          setKnowledgeData((prevData) => ({ ...prevData, authorProfile: url }));
           console.log("Media updated in:", url);
         } catch (e) {
           console.log(e);
@@ -96,9 +93,11 @@ const NewKnowledge = ({
       }
 
       const docRef = doc(db, "knowledge", knowledgeData.id);
-      const fieldsToExclude = !isMediaChanged ? ["mediaFile", "id"] : ["id"];
+      const fieldsToExclude = !isMediaChanged
+        ? ["authorProfile", "id"]
+        : ["id"];
       const knowledgeDataToUpdate = Object.fromEntries(
-        Object.entries({ ...knowledgeData, mediaFile: url }).filter(
+        Object.entries({ ...knowledgeData, authorProfile: url }).filter(
           ([key]) => !fieldsToExclude.includes(key)
         )
       );
@@ -114,11 +113,19 @@ const NewKnowledge = ({
     onCancel();
   };
 
+  const getVideoId = (url) => {
+    const regex =
+      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    console.log(match[1]);
+    return match ? match[1] : null;
+  };
+
   return (
     <div className="absolute w-screen h-screen lg:w-full lg:h-full z-10 top-0 left-0 bg-[#50525580] flex justify-center items-center">
       <div className="w-full lg:w-[90%] h-full md:h-fit bg-white rounded-md p-4 md:p-8">
-        <div className="flex flex-wrap justify-between w-full gap-4 mt-12 h-fit">
-          <div className="w-full md:w-[50%] h-fit flex flex-col gap-7 ">
+        <div className="flex flex-wrap justify-between w-full gap-4 mt-8 h-fit">
+          <div className="w-full md:w-[50%] h-fit flex flex-col gap-4 ">
             {/* <input
               type="text"
               className="w-full h-10 pl-2 font-medium border-none rounded-md outline-none bg-slate-300"
@@ -129,9 +136,9 @@ const NewKnowledge = ({
               }
             /> */}
 
-            <select
-              className="w-full h-10 pl-2 font-medium border-none rounded-md outline-none bg-slate-300"
-              placeholder="Leader Type *"
+            {/* <select
+              className="w-full h-10 px-4 font-medium border-none rounded-md outline-none bg-green-300 "
+              // placeholder="Leader Type *"
               value={knowledgeData.type}
               onChange={(e) =>
                 setKnowledgeData({ ...knowledgeData, type: e.target.value })
@@ -140,32 +147,100 @@ const NewKnowledge = ({
               <option value="" disabled hidden>
                 Select Type
               </option>
-              <option value="pepTalks">Pep Talks</option>
-              <option value="podcast">Podcast</option>
-              <option value="LearningPrograms">Learning Programs</option>
-            </select>
+             
+            </select> */}
+            <div
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="relative w-full h-10 px-2 font-medium flex items-center cursor-pointer justify-between border-none rounded-md outline-none bg-slate-300 "
+            >
+              <p>{knowledgeData.type ? knowledgeData.type : "Select Type"}</p>
+              <p>▼</p>
+              {isDropdownOpen && (
+                <div className="absolute w-full h-fit rounded-md bg-blue-300 left-0 top-11 flex flex-col shadow-md">
+                  <div
+                    value="pepTalks"
+                    className="w-full h-10 border-b hover:bg-blue-200 px-4 pt-1 flex items-center"
+                    onClick={() =>
+                      setKnowledgeData({ ...knowledgeData, type: "pepTalks" })
+                    }
+                  >
+                    Pep Talks
+                  </div>
+                  <div
+                    value="podcast"
+                    className="w-full h-10 border-b  hover:bg-blue-200 px-4 flex items-center"
+                    onClick={() =>
+                      setKnowledgeData({ ...knowledgeData, type: "podcast" })
+                    }
+                  >
+                    Podcast
+                  </div>
+                  <div
+                    value="LearningPrograms"
+                    className="w-full h-10  hover:bg-blue-200 px-4 flex items-center"
+                    onClick={() =>
+                      setKnowledgeData({
+                        ...knowledgeData,
+                        type: "learningPrograms",
+                      })
+                    }
+                  >
+                    Learning Programs
+                  </div>
+                </div>
+              )}
+            </div>
             <input
               type="text"
               className="w-full h-10 pl-2 font-medium border-none rounded-md outline-none bg-slate-300"
               placeholder="Title"
-              value={knowledgeData.sourceType}
+              value={knowledgeData.title}
               onChange={(e) =>
                 setKnowledgeData({
                   ...knowledgeData,
-                  sourceType: e.target.value,
+                  title: e.target.value,
+                })
+              }
+            />
+            <input
+              type="text"
+              className="w-full h-10 pl-2 font-medium border-none rounded-md outline-none bg-slate-300"
+              placeholder="Author Name"
+              value={knowledgeData.authorName}
+              onChange={(e) =>
+                setKnowledgeData({
+                  ...knowledgeData,
+                  authorName: e.target.value,
                 })
               }
             />
           </div>
-          <div className="w-full md:w-[40%] h-[10rem] rounded-md bg-slate-300 relative flex justify-center items-center">
-            {knowledgeData.mediaFile && knowledgeData.sourceType === "image" ? (
-              <img
-                src={imageUrl}
-                alt="image"
+          <div
+            className={`w-full md:w-[40%] h-[10rem] rounded-md ${
+              knowledgeData.type === "podcast" ? "bg-white" : " bg-slate-300"
+            } relative flex justify-center items-center mt-2`}
+          >
+            {((knowledgeData.mediaUrl && knowledgeData.type === "pepTalks") ||
+              knowledgeData.type === "learningPrograms") && (
+              <iframe
                 className="absolute top-0 left-0 object-cover w-full h-full rounded-md z-1"
-              />
-            ) : (
-              <p className="font-medium text-gray-500">Media Preview 🖼️</p>
+                src={`https://www.youtube.com/embed/${getVideoId(
+                  knowledgeData.mediaUrl
+                )}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="YouTube Video"
+              ></iframe>
+            )}
+            <p className="font-medium text-gray-500">Media Preview 🖼️</p>
+
+            {knowledgeData.mediaUrl && knowledgeData.type === "podcast" && (
+              <iframe
+                src={knowledgeData.mediaUrl}
+                className="absolute top-0 left-0 object-cover w-full h-[10rem] rounded-md z-1"
+                allow="encrypted-media"
+                allowFullScreen
+              ></iframe>
             )}
             {knowledgeData.mediaFile &&
               knowledgeData.sourceType === "video" && (
@@ -191,26 +266,6 @@ const NewKnowledge = ({
             }
           />
           <div className="w-full md:w-[40%] h-full flex flex-col gap-5 mt-5">
-            <div className="relative flex items-center justify-center w-full h-10 pl-2 font-medium border-none rounded-md outline-none bg-slate-400">
-              <input
-                type="file"
-                accept={
-                  knowledgeData.sourceType === "image" ? "image/*" : "video/*"
-                }
-                className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                onChange={(e) => {
-                  const file = e.target.files[0];
-                  if (file) {
-                    setKnowledgeData((prevData) => ({
-                      ...prevData,
-                      mediaFile: file,
-                    }));
-                    setIsMediaChanged(true);
-                  }
-                }}
-              />
-              <p className="font-medium text-gray-500">Add Media + </p>
-            </div>
             <input
               type="text"
               className="w-full h-10 pl-2 font-medium border-none rounded-md outline-none bg-slate-200"
@@ -220,6 +275,28 @@ const NewKnowledge = ({
                 setKnowledgeData({ ...knowledgeData, mediaUrl: e.target.value })
               }
             />
+            <div className="relative flex items-center justify-center w-full h-10 pl-2 font-medium border-none rounded-md outline-none bg-slate-300">
+              <input
+                type="file"
+                accept="image/* video/*"
+                className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    setKnowledgeData((prevData) => ({
+                      ...prevData,
+                      authorProfile: file,
+                    }));
+                    setIsMediaChanged(true);
+                  }
+                }}
+              />
+              <p className="font-medium text-gray-500">
+                {knowledgeData?.authorProfile?.name
+                  ? knowledgeData?.authorProfile?.name
+                  : "Add Author Profile +"}
+              </p>
+            </div>
           </div>
         </div>
         <div className="w-full h-[2.5rem] flex justify-between items-center mt-8">
