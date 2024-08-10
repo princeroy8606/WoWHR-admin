@@ -20,10 +20,11 @@ const KnowledgeHub = () => {
   const [edit, setedit] = useState(false);
   const [defaultEditData, setDefaultEditData] = useState({
     type: "",
-    sourceType: "",
+    title: "",
     description: "",
-    mediaFile: null,
+    authorPicture: null,
     mediaUrl: "",
+    authorName: "",
   });
 
   const KnowledgeRef = collection(db, "knowledge");
@@ -168,7 +169,7 @@ const KnowledgeHub = () => {
                 </div>
                 <div className="w-[10rem] h-fit flex gap-2 items-center text-gray-500">
                   <p className="w-full h-full text-[14px] text-justify">
-                    {knowledge.sourceType}
+                    {knowledge.title}
                   </p>
                 </div>
                 <div className="w-[30rem] h-full overflow-hidden flex gap-4 items-center text-gray-500">
@@ -178,7 +179,7 @@ const KnowledgeHub = () => {
                 </div>
                 <div className="w-[8rem] h-full flex gap-2 items-center text-gray-500">
                   <img
-                    src={knowledge.mediaFile}
+                    src={knowledge.authorPicture}
                     alt="icon"
                     className="w-full h-[90%] object-cover rounded-md"
                   />
@@ -192,10 +193,11 @@ const KnowledgeHub = () => {
                       setDefaultEditData({
                         id: knowledge.id,
                         type: knowledge.type,
-                        sourceType: knowledge.sourceType,
-                        mediaFile: knowledge.mediaFile,
+                        title: knowledge.title,
+                        authorPicture: knowledge.authorPicture,
                         description: knowledge.description,
                         mediaUrl: knowledge.mediaUrl,
+                        authorName: knowledge.authorName,
                       });
                     }}
                   >

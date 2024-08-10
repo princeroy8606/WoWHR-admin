@@ -22,7 +22,7 @@ const NewKnowledge = ({
     type: "",
     title: "",
     description: "",
-    authorProfile: null,
+    authorPicture: null,
     mediaUrl: "",
     authorName: "",
   });
@@ -32,7 +32,7 @@ const NewKnowledge = ({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
-    if (knowledgeData.authorProfile && isMediaChanged) {
+    if (knowledgeData.authorPicture && isMediaChanged) {
       const file = knowledgeData.mediaFile;
 
       if (file instanceof Blob) {
@@ -43,10 +43,11 @@ const NewKnowledge = ({
         reader.readAsDataURL(file);
       }
     }
-  }, [knowledgeData.authorProfile, isMediaChanged]);
+  }, [knowledgeData.authorPicture, isMediaChanged]);
 
   useEffect(() => {
     if (edit) {
+      console.log(defaultEditData)
       setKnowledgeData(defaultEditData);
     }
   }, [edit, defaultEditData]);
@@ -60,7 +61,7 @@ const NewKnowledge = ({
           storage,
           `knowledge/${knowledgeData.mediaFile.name}`
         );
-        await uploadBytes(mediaRef, knowledgeData.authorProfile);
+        await uploadBytes(mediaRef, knowledgeData.authorPicture);
         url = await getDownloadURL(mediaRef);
         console.log("Media uploaded to:", url);
       } catch (e) {
@@ -71,7 +72,7 @@ const NewKnowledge = ({
     if (!edit) {
       const eventRef = collection(db, "knowledge");
       try {
-        await addDoc(eventRef, { ...knowledgeData, authorProfile: url });
+        await addDoc(eventRef, { ...knowledgeData, authorPicture: url });
         console.log("Added to database");
       } catch (e) {
         console.log(e);
@@ -81,11 +82,11 @@ const NewKnowledge = ({
         try {
           const mediaRef = ref(
             storage,
-            `knowledge/${knowledgeData.authorProfile.name}`
+            `knowledge/${knowledgeData.authorPicture.name}`
           );
-          await uploadBytes(mediaRef, knowledgeData.authorProfile);
+          await uploadBytes(mediaRef, knowledgeData.authorPicture);
           url = await getDownloadURL(mediaRef);
-          setKnowledgeData((prevData) => ({ ...prevData, authorProfile: url }));
+          setKnowledgeData((prevData) => ({ ...prevData, authorPicture: url }));
           console.log("Media updated in:", url);
         } catch (e) {
           console.log(e);
@@ -94,10 +95,10 @@ const NewKnowledge = ({
 
       const docRef = doc(db, "knowledge", knowledgeData.id);
       const fieldsToExclude = !isMediaChanged
-        ? ["authorProfile", "id"]
+        ? ["authorPicture", "id"]
         : ["id"];
       const knowledgeDataToUpdate = Object.fromEntries(
-        Object.entries({ ...knowledgeData, authorProfile: url }).filter(
+        Object.entries({ ...knowledgeData, authorPicture: url }).filter(
           ([key]) => !fieldsToExclude.includes(key)
         )
       );
@@ -285,15 +286,15 @@ const NewKnowledge = ({
                   if (file) {
                     setKnowledgeData((prevData) => ({
                       ...prevData,
-                      authorProfile: file,
+                      authorPicture: file,
                     }));
                     setIsMediaChanged(true);
                   }
                 }}
               />
               <p className="font-medium text-gray-500">
-                {knowledgeData?.authorProfile?.name
-                  ? knowledgeData?.authorProfile?.name
+                {knowledgeData?.authorPicture?.name
+                  ? knowledgeData?.authorPicture?.name
                   : "Add Author Profile +"}
               </p>
             </div>
