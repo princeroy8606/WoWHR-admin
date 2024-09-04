@@ -183,7 +183,7 @@ const Testimonial = () => {
                 setEditTestimonial(null);
                 setOpenAddNewTestimonial(true);
               }}
-              className="w-[8rem] h-full bg-blue-500 rounded-md flex justify-center items-center cursor-pointer text-white"
+              className="w-[fit] px-4 h-fit py-2 bg-[#3372D7] rounded-md flex justify-center items-center cursor-pointer text-white"
             >
               <p>Add New Testimonial</p>
             </button>
