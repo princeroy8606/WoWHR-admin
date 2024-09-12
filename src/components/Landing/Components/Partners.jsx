@@ -1,9 +1,27 @@
+import { useEffect, useState } from "react";
 import com1 from "../assets/Images/company1.jpg";
 import com2 from "../assets/Images/company2.png";
 import com3 from "../assets/Images/company3.png";
 import com4 from "../assets/Images/company4.png";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../firebase";
 
 const Partners = () => {
+  const [partners, setPartners] = useState([]);
+
+  const fetchPartners = async () => {
+    const querySnapshot = await getDocs(collection(db, 'partners'));
+    const partnersList = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setPartners(partnersList);
+  };
+
+  useEffect(() => {
+    fetchPartners();
+  }, []);
+
   return (
     <section
       id="partners"
@@ -28,34 +46,18 @@ const Partners = () => {
           improvement in the fields in which it operates.
         </div>
         <div className="flex justify-between w-full mb-10 sm:mb-20">
-          <img
-            src={com1}
-            alt="com1"
-            data-aos="fade-left"
-            data-aos-duration="250"
-            className="object-contain w-24 h-auto sm:w-44"
-          />
-          <img
-            src={com3}
-            alt="com3"
-            data-aos="fade-left"
-            data-aos-duration="500"
-            className="object-contain w-24 h-auto sm:w-44"
-          />
-          <img
-            src={com2}
-            alt="com2"
-            data-aos="fade-left"
-            data-aos-duration="750"
-            className="object-contain w-20 h-auto sm:w-36"
-          />
-          <img
-            src={com4}
-            alt="com4"
-            data-aos="fade-left"
-            data-aos-duration="1000"
-            className="object-contain w-16 h-auto sm:w-24"
-          />
+          {
+            partners && partners?.map((partner) => (
+              <img
+                key={partner?.id}
+                src={partner.companyLogo}
+                alt="company logo"
+                data-aos="fade-left"
+                data-aos-duration="250"
+                className="object-contain w-24 h-auto max-h-[10rem] sm:w-44"
+              />
+            ))
+          }
         </div>
       </div>
     </section>
