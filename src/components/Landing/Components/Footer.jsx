@@ -1,3 +1,4 @@
+import { useState } from "react";
 import f1 from "../assets/Images/f1.png";
 import f2 from "../assets/Images/f2.jpg";
 import f3 from "../assets/Images/f3.jpg";
@@ -13,8 +14,35 @@ import {
   Facebook,
   Linkedin,
 } from "lucide-react";
+import { toast } from "react-toastify";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../../firebase";
 
 const Footer = () => {
+
+  const [email, setVisitorEmail] = useState('')
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const submitEmail = async () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    console.log(`${email}`,emailRegex.test(email))
+    if (emailRegex.test(email)) {
+      try {
+        await addDoc(collection(db, "subscriptions"), {
+          email,
+          timestamp: new Date(),
+        });
+        setIsSubscribed(true);
+        setVisitorEmail("");
+        toast.success("Subscribed Thanks for your subscription 🥳")
+      } catch (error) {
+        console.error("Error saving subscription: ", error);
+      }
+    } else {
+      toast.warning("Enter Valid Email");
+    }
+  }
+
   return (
     <section
       id="footer"
@@ -51,12 +79,16 @@ const Footer = () => {
               <div className="flex justify-between border-b border-gray-500">
                 <input
                   type="email"
+                  value={email}
+                  onChange={(e) => setVisitorEmail(e.target.value)}
                   className="w-full p-1 xl:p-2 text-[.65rem] xl:text-sm md:text-sm text-white bg-transparent"
                   placeholder="Your E-Mail"
                 />
-                <button className="px-2 xl:px-4 py-1 mb-1 text-[.65rem] xl:text-xs font-bold tracking-wide bg-white rounded-full transition-all duration-300 xl:hover:text-white xl:hover:bg-[#089adec1] xl:hover:translate-y-[-.25rem]  text-defaultBlue">
-                  <a href="mailto:Connect@wowhr.in" className="font-bold">
-                    SUBSCRIBE
+                <button
+                  onClick={() => submitEmail()}
+                  className="px-2 xl:px-4 py-1 mb-1 text-[.65rem] xl:text-xs font-bold tracking-wide bg-white rounded-full transition-all duration-300 text-black xl:hover:text-white xl:hover:bg-[#089adec1] xl:hover:translate-y-[-.25rem]  text-defaultBlue">
+                  <a  className="font-bold">
+                    {isSubscribed ? ' SUBSCRIBED' : ' SUBSCRIBE'}
                   </a>
                 </button>
               </div>

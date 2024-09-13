@@ -4,6 +4,7 @@ import assets from '../../assets/assets';
 import NewPartner from './NewPartner';
 import { db, collection, getDocs, doc, deleteDoc, updateDoc } from "../../firebase";
 import { storage, ref, deleteObject } from "../../firebase";
+import MobileSidebar from '../global/MobileSidebar';
 
 const BusinessPartners = () => {
     const [openAddNewPartner, setOpenAddNewPartner] = useState(false);
@@ -96,8 +97,8 @@ const BusinessPartners = () => {
                         {partners.map((partner) => (
                             <div key={partner.id} className="w-[20rem] h-[12rem] rounded-md bg-slate-200 shadow-sm">
                                 <img
-                                        src={partner.companyLogo}
-                                        alt="company logo"
+                                    src={partner.companyLogo}
+                                    alt="company logo"
                                     className="w-full h-[80%] rounded-t-md object-contain"
                                 />
                                 <div className='w-full flex items-center justify-between mt-1 px-2'>
