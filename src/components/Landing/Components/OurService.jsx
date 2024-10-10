@@ -4,6 +4,7 @@ import CardIcon1 from "../assets/SVG/card1Icon.jsx";
 import CardIcon2 from "../assets/SVG/card2Icon.jsx";
 import CardIcon3 from "../assets/SVG/card3Icon.jsx";
 import CardIcon4 from "../assets/SVG/card4Icon.jsx";
+import { useNavigate } from "react-router-dom";
 
 const OurService = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -11,6 +12,8 @@ const OurService = () => {
   const [isHovered3, setIsHovered3] = useState(false);
   const [isHovered4, setIsHovered4] = useState(false);
   const [isHoveredOther, setIsHoveredOther] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <section
@@ -42,9 +45,8 @@ const OurService = () => {
           data-aos-duration="1000"
         >
           <div
-            className={`transition-all duration-300 translate-y-0 cursor-pointer xl:hover:drop-shadow-xl xl:hover:-translate-y-1 xl:-translate-x-0 -translate-x-12 ${
-              isHoveredOther && !isHovered ? "xl:scale-90" : "xl:scale-100"
-            } `}
+            className={`transition-all duration-300 translate-y-0 cursor-pointer xl:hover:drop-shadow-xl xl:hover:-translate-y-1 xl:-translate-x-0 -translate-x-12 ${isHoveredOther && !isHovered ? "xl:scale-90" : "xl:scale-100"
+              } `}
             onMouseEnter={() => {
               setIsHovered(true);
               setIsHoveredOther(true);
@@ -64,18 +66,17 @@ const OurService = () => {
               //     : "#011329"
               // }
               stroker={"#cccccc"}
-              className={`object-contain w-full h-full ${
-                isHovered2 || isHovered3 || isHovered4
+              className={`object-contain w-full h-full ${isHovered2 || isHovered3 || isHovered4
                   ? "drop-shadow-sm"
                   : "drop-shadow-lg"
-              }`}
+                }`}
             />
             <div
-              className={`absolute mx-5 my-2 md:mx-8 md:my-8 transition-all duration-200 xl:mx-5 xl:my-4 top-1 ${
-                isHovered2 || isHovered3 || isHovered4
+
+              className={`absolute mx-5 my-2 md:mx-8 md:my-8 transition-all duration-200 xl:mx-5 xl:my-4 top-1 ${isHovered2 || isHovered3 || isHovered4
                   ? "text-black"
                   : "text-white"
-              }`}
+                }`}
             >
               <CardIcon1
                 filler={
@@ -104,12 +105,12 @@ const OurService = () => {
           data-aos-duration="750"
         >
           <div
+            onClick={() => navigate('/map')}
             className={`transition-all duration-300 translate-y-0 cursor-pointer xl:hover:drop-shadow-xl xl:hover:translate-y-[-4px] 
               xl:translate-x-0 translate-x-12
-              ${
-                isHoveredOther && !isHovered2
-                  ? "xl:scale-90 xl:translate-y-0"
-                  : "xl:scale-100 xl:translate-y-6"
+              ${isHoveredOther && !isHovered2
+                ? "xl:scale-90 xl:translate-y-0"
+                : "xl:scale-100 xl:translate-y-6"
               }`}
             onMouseEnter={() => {
               setIsHovered2(true);
@@ -123,14 +124,12 @@ const OurService = () => {
             <CardFrame
               filler={!isHovered2 ? "#ffffff" : "#011329"}
               stroker={!isHovered2 ? "#cccccc" : "#cccccc"}
-              className={`object-contain w-full h-full ${
-                isHovered2 ? "drop-shadow-sm" : "drop-shadow-md"
-              }`}
+              className={`object-contain w-full h-full ${isHovered2 ? "drop-shadow-sm" : "drop-shadow-md"
+                }`}
             />
             <div
-              className={`absolute mx-5 my-2 md:mx-8 md:my-8 xl:mx-5 xl:my-4 top-1 ${
-                isHovered2 ? "text-white" : "text-black"
-              }`}
+              className={`absolute mx-5 my-2 md:mx-8 md:my-8 xl:mx-5 xl:my-4 top-1 ${isHovered2 ? "text-white" : "text-black"
+                }`}
             >
               <CardIcon2
                 filler={isHovered2 ? "#ffffff" : "#1850A8"}
@@ -160,8 +159,7 @@ const OurService = () => {
         >
           <div
             className={`transition-all duration-300 translate-y-0 
-              xl:-translate-x-0 -translate-x-12 cursor-pointer xl:hover:drop-shadow-xl xl:hover:-translate-y-1 ${
-                isHoveredOther && !isHovered3 ? "xl:scale-90" : "xl:scale-100"
+              xl:-translate-x-0 -translate-x-12 cursor-pointer xl:hover:drop-shadow-xl xl:hover:-translate-y-1 ${isHoveredOther && !isHovered3 ? "xl:scale-90" : "xl:scale-100"
               }`}
             onMouseEnter={() => {
               setIsHovered3(true);
@@ -175,14 +173,12 @@ const OurService = () => {
             <CardFrame
               filler={!isHovered3 ? "#ffffff" : "#011329"}
               stroker={!isHovered3 ? "#cccccc" : "#cccccc"}
-              className={`object-contain w-full h-full ${
-                isHovered3 ? "drop-shadow-sm" : "drop-shadow-md"
-              }`}
+              className={`object-contain w-full h-full ${isHovered3 ? "drop-shadow-sm" : "drop-shadow-md"
+                }`}
             />
             <div
-              className={`absolute mx-5 my-2 md:mx-8 md:my-8 xl:mx-5 xl:my-4 top-1 ${
-                isHovered3 ? "text-white" : "text-black"
-              }`}
+              className={`absolute mx-5 my-2 md:mx-8 md:my-8 xl:mx-5 xl:my-4 top-1 ${isHovered3 ? "text-white" : "text-black"
+                }`}
             >
               <CardIcon3
                 filler={isHovered3 ? "#ffffff" : "#1850A8"}
@@ -212,10 +208,9 @@ const OurService = () => {
           <div
             className={`transition-all duration-300 translate-y-0 cursor-pointer xl:hover:drop-shadow-xl xl:hover:translate-y-[-4px] 
               xl:translate-x-0 translate-x-12 
-              ${
-                isHoveredOther && !isHovered4
-                  ? "xl:scale-90 xl:translate-y-0"
-                  : "xl:scale-100 xl:translate-y-6"
+              ${isHoveredOther && !isHovered4
+                ? "xl:scale-90 xl:translate-y-0"
+                : "xl:scale-100 xl:translate-y-6"
               }`}
             onMouseEnter={() => {
               setIsHovered4(true);
@@ -229,14 +224,12 @@ const OurService = () => {
             <CardFrame
               filler={!isHovered4 ? "#ffffff" : "#011329"}
               stroker={!isHovered4 ? "#cccccc" : "#cccccc"}
-              className={`object-contain w-full h-full ${
-                isHovered4 ? "drop-shadow-sm" : "drop-shadow-md"
-              }`}
+              className={`object-contain w-full h-full ${isHovered4 ? "drop-shadow-sm" : "drop-shadow-md"
+                }`}
             />
             <div
-              className={`absolute mx-5 my-2 md:mx-8 md:my-8 xl:mx-5 xl:my-4 top-1 ${
-                isHovered4 ? "text-white" : "text-black"
-              }`}
+              className={`absolute mx-5 my-2 md:mx-8 md:my-8 xl:mx-5 xl:my-4 top-1 ${isHovered4 ? "text-white" : "text-black"
+                }`}
             >
               <CardIcon4
                 filler={isHovered4 ? "#ffffff" : "#1850A8"}
