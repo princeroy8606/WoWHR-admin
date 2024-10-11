@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState} from "react";
 import f1 from "../assets/Images/f1.png";
 import f2 from "../assets/Images/f2.jpg";
 import f3 from "../assets/Images/f3.jpg";
@@ -19,7 +19,6 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase";
 
 const Footer = () => {
-
   const [email, setVisitorEmail] = useState('')
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -42,7 +41,6 @@ const Footer = () => {
       toast.warning("Enter Valid Email");
     }
   }
-
   return (
     <section
       id="footer"
@@ -104,25 +102,25 @@ const Footer = () => {
                   QUICK LINKS
                 </div>
                 <a
-                  href="#about-us"
+                  href="/#about-us"
                   className="text-[.65rem] xl:text-sm md:text-sm transition-all duration-300 xl:hover:text-white xl:hover:-translate-y-[2px]  tracking-wider block text-gray-400 w-max translate-y-0"
                 >
                   About Us
                 </a>
                 <a
-                  href="#leadership"
+                  href="/#leadership"
                   className="text-[.65rem] xl:text-sm md:text-sm tracking-wider transition-all xl:hover:text-white duration-300 xl:hover:-translate-y-[2px]  block text-gray-400 w-max translate-y-0"
                 >
                   Meet the Team
                 </a>
                 <a
-                  href="#events"
+                  href="/#events"
                   className="text-[.65rem] xl:text-sm md:text-sm tracking-wider block transition-all xl:hover:text-white duration-300 xl:hover:-translate-y-[2px]  text-gray-400 w-max translate-y-0"
                 >
                   Events
                 </a>
                 <a
-                  href="#testimonials"
+                  href="/#testimonials"
                   className="text-[.65rem] xl:text-sm md:text-sm tracking-wider block transition-all xl:hover:text-white duration-300 xl:hover:-translate-y-[2px]  text-gray-400 w-max translate-y-0"
                 >
                   Testimonial

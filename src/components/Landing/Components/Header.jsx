@@ -94,44 +94,44 @@ const Header = () => {
       {/* lap view*/}
       <nav className="items-center justify-between hidden gap-4 text-base xl:flex">
         <a
-          href="#home"
+          href="/#home"
           className="px-4 py-2 font-bold text-center text-black transition-all duration-300 rounded-lg mb-0 hover:shadow-lg hover:text-white hover:bg-[#089adec1] hover:mb-2 min-w-28"
         >
           Home
         </a>
 
         <a
-          href="#about-us"
+          href="/#about-us"
           className="px-4 py-2 font-bold text-center text-black transition-all duration-300 rounded-lg mb-0 hover:shadow-lg hover:text-white hover:bg-[#089adec1] hover:mb-2 min-w-28"
         >
           About Us
         </a>
         <a
-          href="#partners"
+          href="/#partners"
           className="px-4 py-2 mb-0 font-bold text-center text-black transition-all duration-300 rounded-lg hover:shadow-lg hover:mb-2 min-w-28 hover:text-white hover:bg-[#089adec1]"
         >
           Network
         </a>
         <a
-          href="#leadership"
+          href="/#leadership"
           className="px-4 py-2 mb-0 font-bold text-center text-black transition-all duration-300 rounded-lg hover:shadow-lg hover:mb-2 min-w-28 hover:text-white hover:bg-[#089adec1]"
         >
           Leadership
         </a>
         <a
-          href="#our-service"
+          href="/#our-service"
           className="px-4 py-2 mb-0 font-bold text-center text-black transition-all duration-300 rounded-lg hover:shadow-lg hover:mb-2 min-w-28 hover:text-white hover:bg-[#089adec1]"
         >
           Our Services
         </a>
         <a
-          href="#events"
+          href="/#events"
           className="px-4 py-2 mb-0 font-bold text-center text-black transition-all duration-300 rounded-lg hover:shadow-lg hover:mb-2 min-w-28 hover:text-white hover:bg-[#089adec1]"
         >
           Events
         </a>
         <a
-          href="#knowledge"
+          href="/#knowledge"
           className="px-4 py-2 mb-0 font-bold text-center text-black transition-all duration-300 rounded-lg hover:shadow-lg hover:mb-2 min-w-28 hover:text-white hover:bg-[#089adec1]"
         >
           Knowledge Hub
@@ -165,28 +165,28 @@ const Header = () => {
         </div>
         <div className="flex h-[23.5rem] w-[90%] justify-between flex-col gap-3 p-4 bg-gray-400  shadow-xl bg-opacity-30 rounded-2xl ">
           <a
-            href="#home"
+            href="/#home"
             onClick={handleNavClick}
             className="flex items-center w-full px-4 py-2 text-sm font-bold text-left text-white transition-colors duration-200 rounded-md shadow-xl lg:text-3xl md:py-4 md:text-2xl bg-lightBlue"
           >
             <Home className="w-5 h-5 mr-2 lg:w-10 lg:h-10 lg:mr-5" /> Home
           </a>
           <a
-            href="#about-us"
+            href="/#about-us"
             onClick={handleNavClick}
             className="flex items-center w-full px-4 py-2 text-sm font-bold text-left text-white transition-colors duration-200 rounded-md shadow-xl lg:text-3xl md:py-4 md:text-2xl bg-lightBlue"
           >
             <Info className="w-5 h-5 mr-2 lg:w-10 lg:h-10 lg:mr-5" /> About Us
           </a>
           <a
-            href="#partners"
+            href="/#partners"
             onClick={handleNavClick}
             className="flex items-center w-full px-4 py-2 text-sm font-bold text-left text-white transition-colors duration-200 rounded-md shadow-xl lg:text-3xl md:py-4 md:text-2xl bg-lightBlue"
           >
             <Users className="w-5 h-5 mr-2 lg:w-10 lg:h-10 lg:mr-5" /> Network
           </a>
           <a
-            href="#leadership"
+            href="/#leadership"
             onClick={handleNavClick}
             className="flex items-center w-full px-4 py-2 text-sm font-bold text-left text-white transition-colors duration-200 rounded-md shadow-xl lg:text-3xl md:py-4 md:text-2xl bg-lightBlue"
           >
@@ -194,7 +194,7 @@ const Header = () => {
             Leadership
           </a>
           <a
-            href="#our-service"
+            href="/#our-service"
             onClick={handleNavClick}
             className="flex items-center w-full px-4 py-2 text-sm font-bold text-left text-white transition-colors duration-200 rounded-md shadow-xl lg:text-3xl md:py-4 md:text-2xl bg-lightBlue"
           >
@@ -202,14 +202,14 @@ const Header = () => {
             Services
           </a>
           <a
-            href="#events"
+            href="/#events"
             onClick={handleNavClick}
             className="flex items-center w-full px-4 py-2 text-sm font-bold text-left text-white transition-colors duration-200 rounded-md shadow-xl lg:text-3xl md:py-4 md:text-2xl bg-lightBlue"
           >
             <Calendar className="w-5 h-5 mr-2 lg:w-10 lg:h-10 lg:mr-5" /> Events
           </a>
           <a
-            href="#knowledge"
+            href="/#knowledge"
             onClick={handleNavClick}
             className="flex items-center w-full px-4 py-2 text-sm font-bold text-left text-white transition-colors duration-200 rounded-md shadow-xl lg:text-3xl md:py-4 md:text-2xl bg-lightBlue"
           >
