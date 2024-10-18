@@ -4,6 +4,8 @@ import CardIcon1 from "../assets/SVG/card1Icon.jsx";
 import CardIcon2 from "../assets/SVG/card2Icon.jsx";
 import CardIcon3 from "../assets/SVG/card3Icon.jsx";
 import CardIcon4 from "../assets/SVG/card4Icon.jsx";
+import CloseIcon from "../assets/Images/close.png";
+import CountUp from 'react-countup';
 import { useNavigate } from "react-router-dom";
 
 const OurService = () => {
@@ -12,6 +14,7 @@ const OurService = () => {
   const [isHovered3, setIsHovered3] = useState(false);
   const [isHovered4, setIsHovered4] = useState(false);
   const [isHoveredOther, setIsHoveredOther] = useState(false);
+  const [openNetwork, setOpenNetwork] = useState(false);
 
   const navigate = useNavigate();
 
@@ -20,6 +23,22 @@ const OurService = () => {
       id="our-service"
       className="flex flex-col items-center justify-center h-full p-5 mx-auto overflow-hidden bg-white cursor-default md:h-full xl:h-[92vh] xl:py-0 xl:px-20 max-w-7xl sm:pb-5 md:pb-10"
     >
+      {
+        openNetwork && <div className="w-screen h-screen absolute z-40 bg-[#00000036] flex items-center justify-center backdrop-blur">
+          <div data-aos='fade-down' className=" w-[90%] md:w-[35%] h-fit bg-white shadow-lg rounded-lg p-6 md:p-4 items-center flex-wrap ">
+            <div className="w-full flex items-center justify-end h-10">
+              <div className="w-8 h-8 rounded-full border border-black p-1 cursor-pointer" onClick={() => setOpenNetwork(false)}>
+                <img src={CloseIcon} alt="close" className="w-full h-full object-contain rounded-full p-1" />
+              </div>
+            </div>
+            <div className="flex gap-4  items-center justify-around w-full">
+              <div className="flex gap-2">  <CountUp end={3500} duration={1} className="font-bold text-[3rem] md:text-[5rem] text-[#102744]" /> <p className="font-bold text-[3rem] md:text-[5rem] text-[#102744]">+ </p></div>
+
+              <p className="font-bold text-[2.5rem] md:text-[4rem] text-[#1e4b82] text-center">Users</p>
+            </div>
+          </div>
+        </div>
+      }
       <div
         className="mb-3 text-xl font-semibold xl:mt-0 md:mt-10 xl:mb-14 md:text-4xl xl:text-3xl font-jost"
         data-aos="fade-right"
@@ -67,22 +86,22 @@ const OurService = () => {
               // }
               stroker={"#cccccc"}
               className={`object-contain w-full h-full ${isHovered2 || isHovered3 || isHovered4
-                  ? "drop-shadow-sm"
-                  : "drop-shadow-lg"
+                ? "drop-shadow-sm"
+                : "drop-shadow-lg"
                 }`}
             />
             <div
-
+              onClick={() => setOpenNetwork(true)}
               className={`absolute mx-5 my-2 md:mx-8 md:my-8 transition-all duration-200 xl:mx-5 xl:my-4 top-1 ${isHovered2 || isHovered3 || isHovered4
-                  ? "text-black"
-                  : "text-white"
+                ? "text-black"
+                : "text-white"
                 }`}
             >
               <CardIcon1
                 filler={
                   isHovered2 || isHovered3 || isHovered4 ? "#1850A8" : "#ffffff"
                 }
-                className={`w-6 h-6 mb-2 md:w-12 md:h-12 xl:w-auto xl:mb-5 xl:h-auto`}
+                className={`w-6 h-6 mb-2 md:w-12 md:h-12 xl:w-auto xl:mb-5 xl:h-auto `}
               />
               <div className="mb-4 text-sm font-bold md:text-2xl xl:text-xl ">
                 Network
@@ -158,6 +177,7 @@ const OurService = () => {
           data-aos-duration="500"
         >
           <div
+            onClick={() => navigate('/certificate')}
             className={`transition-all duration-300 translate-y-0 
               xl:-translate-x-0 -translate-x-12 cursor-pointer xl:hover:drop-shadow-xl xl:hover:-translate-y-1 ${isHoveredOther && !isHovered3 ? "xl:scale-90" : "xl:scale-100"
               }`}

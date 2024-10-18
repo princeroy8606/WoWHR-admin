@@ -9,12 +9,14 @@ import Home from "../components/Landing/Home";
 import BusinessPartners from "../components/BusinessPartners/BusinessPartners";
 import Subscribers from "../components/Subscribers/Subscribers";
 import Mapview from "../components/map/Mapview";
+import Certificate from "../components/Landing/Components/Certificate";
 
 const DashRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/map" element={<Mapview />} />
+      <Route path="/certificate" element={<Certificate />} />
       <Route path="/login" element={<LoginForm />} />
       <Route path="/admin" element={<CoreTeam />} />
       <Route path="/admin/testimonials" element={<Testimonials />} />
